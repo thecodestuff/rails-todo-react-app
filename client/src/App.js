@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './App.css';
 //Importing components 
 import TodosContainer from './components/TodosContainer.js'
 

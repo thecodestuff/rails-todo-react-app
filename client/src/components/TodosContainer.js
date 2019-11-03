@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 import axios from 'axios' // api request package
+import update from 'immutability-helper'
 
 class TodosContainer extends Component{
   constructor(props){
@@ -46,13 +47,19 @@ class TodosContainer extends Component{
     // call api POST /api/v1/todos when enter is press
     if(event.key === 'Enter'){
       axios.post('api/v1/todos', {todo: {title: event.target.value}}).then(response => {
-        const todo = response.data
+        //const todo = response.data
         console.log(this.state.todos)
         //Updating state with current todo
-        this.setState({
+        /*this.setState({
           todos: this.state.todos.concat(todo),
-          inputValue: ''
+        })*/
+        //Updating state with immtability helper
+        const todo = update(this.state.todos, {
+          $splice: [0, 0, response.data]
         })
+
+        this.setState({todos: [], inputValue: ''})
+        console.log(this.state)
         console.log(this.state.todos)
       }).catch(error => {
         this.setState({
@@ -62,6 +69,29 @@ class TodosContainer extends Component{
         console.log("error while creating new task")
       })
     }
+  }
+
+  // Marked complete
+  updateTodo = (event, id) => {
+    axios.put(` api/v1/todos/${id}`, {todo: {done:event.target.checked}}).then(response => {
+const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
+      const todos = update(this.state.todos, {
+        [todoIndex]: {$set: response.data}
+      })
+      this.setState({
+        todos: todos
+      })    }).catch(error => {
+      console.error(error)
+    })
+  }
+
+  // Delete Todo
+  deleteTodo = (event, id) => {
+    axios.delete(`/api/v1/todos/${id}`).then(response => {
+      console.log(response.data)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
 	render(){
@@ -80,8 +110,17 @@ class TodosContainer extends Component{
         <div className="listWrapper">
           <ul className="taskList">
             {
-              todos.map((todo, index) => (
-                <li key={index}>{todo.title}</li>
+              todos.map((todo) => (
+                <li className="task" todo={todo} key={todo.id}>
+
+                  <input className="taskCheckbox" type="checkbox" 
+                    checked={todo.done} 
+                    onChange={(event) => this.updateTodo(event,todo.id)}
+                  />
+
+                  <label>{todo.title}</label>
+                  <span className="deleteTaskBtn" onClick={event => this.deleteTodo(event, todo.id)}>x</span>
+                </li>
               ))
             }
           </ul>
