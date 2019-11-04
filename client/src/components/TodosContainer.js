@@ -47,18 +47,19 @@ class TodosContainer extends Component{
     // call api POST /api/v1/todos when enter is press
     if(event.key === 'Enter'){
       axios.post('api/v1/todos', {todo: {title: event.target.value}}).then(response => {
-        //const todo = response.data
+        const todo = response.data
         console.log(this.state.todos)
         //Updating state with current todo
-        /*this.setState({
+        this.setState({
           todos: this.state.todos.concat(todo),
-        })*/
-        //Updating state with immtability helper
-        const todo = update(this.state.todos, {
-          $splice: [0, 0, response.data]
+          inputValue: ''
         })
+        //Updating state with immtability helper
+        /*const todo = update(this.state.todos, {
+          $splice: [0, 0, response.data]
+        })*/
 
-        this.setState({todos: [], inputValue: ''})
+        //this.setState({todos: t, inputValue: ''})
         console.log(this.state)
         console.log(this.state.todos)
       }).catch(error => {
@@ -118,7 +119,7 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
                     onChange={(event) => this.updateTodo(event,todo.id)}
                   />
 
-                  <label>{todo.title}</label>
+                  <label className={todo.done ? "title":""} >{todo.title}</label>
                   <span className="deleteTaskBtn" onClick={event => this.deleteTodo(event, todo.id)}>x</span>
                 </li>
               ))

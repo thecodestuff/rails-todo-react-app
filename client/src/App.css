@@ -106,3 +106,7 @@ input[placeholder] {
   margin-right: 5px;
   cursor: default;
 }
+
+.title{
+  text-decoration: line-through;
+}
