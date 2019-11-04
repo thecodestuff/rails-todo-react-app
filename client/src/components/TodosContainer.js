@@ -89,7 +89,10 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
   // Delete Todo
   deleteTodo = (event, id) => {
     axios.delete(`/api/v1/todos/${id}`).then(response => {
-      console.log(response.data)
+      console.log(id)
+      console.log(this.state.todos)
+      //this.state.todos.filter(todo => todo.id !== id)
+      debugger;
     }).catch(error => {
       console.log(error)
     })
