@@ -60,8 +60,6 @@ class TodosContainer extends Component{
         })*/
 
         //this.setState({todos: t, inputValue: ''})
-        console.log(this.state)
-        console.log(this.state.todos)
       }).catch(error => {
         this.setState({
           isLoaded: true,
@@ -91,8 +89,11 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
     axios.delete(`/api/v1/todos/${id}`).then(response => {
       console.log(id)
       console.log(this.state.todos)
-      //this.state.todos.filter(todo => todo.id !== id)
-      debugger;
+      this.setState({
+        todos: this.state.todos.filter(todo => todo.id !== id),
+        error: null,
+      })
+      //debugger;
     }).catch(error => {
       console.log(error)
     })
