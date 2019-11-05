@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 //Importing components 
-import TodosContainer from './components/TodosContainer.js'
+import TodosContainer from './container/TodosContainer.js'
 
 class App extends Component{
   render(){
