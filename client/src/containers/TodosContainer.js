@@ -49,13 +49,17 @@ class TodosContainer extends Component{
       axios.post('api/v1/todos', {todo: {title: event.target.value}}).then(response => {
         const todo = response.data
         console.log(this.state.todos)
-        //debugger
         //Updating state with current todo
         this.setState({
           todos: this.state.todos.concat(todo),
           inputValue: ''
         })
- 
+        //Updating state with immtability helper
+        /*const todo = update(this.state.todos, {
+          $splice: [0, 0, response.data]
+        })*/
+
+        //this.setState({todos: t, inputValue: ''})
       }).catch(error => {
         this.setState({
           isLoaded: true,
@@ -131,4 +135,11 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
 	}
 }
 
-export default TodosContainer
+// map state to props object 
+const mapStateToProps = (state) => {
+  return {
+    todos: state.props
+  }
+}
+
+export default connect(mapStateToProps)(TodosContainer)
