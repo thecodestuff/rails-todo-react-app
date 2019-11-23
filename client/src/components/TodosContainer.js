@@ -49,7 +49,7 @@ class TodosContainer extends Component{
       axios.post('api/v1/todos', {todo: {title: event.target.value}}).then(response => {
         //const todo = response.data
         console.log(this.state.todos)
-        debugger
+        //debugger
         //Updating state with current todo
         /*this.setState({
           todos: this.state.todos.concat(todo),
@@ -58,9 +58,9 @@ class TodosContainer extends Component{
         const todo = update(this.state.todos, {
           $splice: [0, 0, response.data]
         })
-        debugger
+        //debugger
         this.setState({todos: todo, inputValue: ''})
-        debugger; 
+        //debugger; 
       }).catch(error => {
         this.setState({
           isLoaded: true,
