@@ -1,10 +1,18 @@
 import {LOAD_TODOS, ADD_TODO, TOGGLE_TODO, DELETE_TODO} from '../actions/constant'
+const intialState = {
+      isLoaded: false,
+      error: null,
+      inputValue: '',
+      todos:[]
+}
 
-todosReducer = (state=[], actions) => {
-  switch(action.type){
+export default function todosReducer(state=intialState, actions){
+  switch(actions.type){
     case LOAD_TODOS:
-      return action.todos
+      return actions.todos
+    default:
+      return state
   }
 }
 
-export default todosReducer;
+//export default todosReducer;

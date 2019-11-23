@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import axios from 'axios' // api request package
 import update from 'immutability-helper'
+import {connect} from 'react-redux'
 
 class TodosContainer extends Component{
   constructor(props){
