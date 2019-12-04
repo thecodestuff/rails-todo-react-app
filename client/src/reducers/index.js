@@ -10,6 +10,16 @@ export default function todosReducer(state=intialState, actions){
   switch(actions.type){
     case LOAD_TODOS:
       return actions.todos
+    case ADD_TODO:
+      return [...state,
+        {
+           id: actions.id,
+           title: actions.title,
+           done: false
+        }
+      ];
+    case TOGGLE_TODO:
+      return state.map(todo => (todo.id === actions.index) ? { ...todo, done: !todo.done} : todo );
     default:
       return state
   }

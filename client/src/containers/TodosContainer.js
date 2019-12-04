@@ -3,7 +3,7 @@ import axios from 'axios' // api request package
 import update from 'immutability-helper'
 import {connect} from 'react-redux'
 // importing actions
-import {loadTodos} from '../actions/index'
+import {loadTodos, addTodo, toggleTodo} from '../actions/index'
 
 class TodosContainer extends Component{
   constructor(props){
@@ -52,41 +52,22 @@ class TodosContainer extends Component{
     if(event.key === 'Enter'){
       axios.post('api/v1/todos', {todo: {title: event.target.value}})
            .then(response => {
-              const todo = response.data
-              console.log(this.state.todos)
-              //Updating state with current todo
-              this.setState({
-              todos: this.state.todos.concat(todo),
-              inputValue: ''
-        })
-        //Updating state with immtability helper
-        /*const todo = update(this.state.todos, {
-          $splice: [0, 0, response.data]
-        })*/
-
-        //this.setState({todos: t, inputValue: ''})
+             const {id, title} = response.data
+              this.props.dispatch(addTodo(id, title))
+              this.setState({inputValue: ''})
       }).catch(error => {
         this.setState({
           isLoaded: true,
           error
         })
-        console.log("error while creating new task")
+        console.log(error)
       })
     }
   }
 
   // Marked complete
   updateTodo = (event, id) => {
-    axios.put(` api/v1/todos/${id}`, {todo: {done:event.target.checked}}).then(response => {
-const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
-      const todos = update(this.state.todos, {
-        [todoIndex]: {$set: response.data}
-      })
-      this.setState({
-        todos: todos
-      })    }).catch(error => {
-      console.error(error)
-    })
+    this.props.dispatch(toggleTodo(id))
   }
 
   // Delete Todo
@@ -98,7 +79,6 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
         todos: this.state.todos.filter(todo => todo.id !== id),
         error: null,
       })
-      //debugger;
     }).catch(error => {
       console.log(error)
     })
@@ -108,7 +88,6 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
     //const {todos} = this.state
     const {todos} = this.props
     const mytodos = Array.from(todos)
-    //debugger
 			return(
 			<div>
         <div className="inputContainer">
