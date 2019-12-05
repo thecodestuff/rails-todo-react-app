@@ -18,7 +18,8 @@ class TodosController < ApplicationController
 
 	def update
 		todo = Todo.find(params[:id])
-		todo.update_attribute(todo_params)
+		todo.done = !todo.done
+		todo.save
 		render json: todo
 	end
 
@@ -31,6 +32,6 @@ class TodosController < ApplicationController
 	private
 
 	def todo_params
-		params.require(:todo).permit(:title, :done)
+		params.require(:todo).permit(:id, :title, :done)
 	end
 end
