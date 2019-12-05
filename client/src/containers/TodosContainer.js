@@ -3,7 +3,7 @@ import axios from 'axios' // api request package
 import update from 'immutability-helper'
 import {connect} from 'react-redux'
 // importing actions
-import {loadTodos, addTodo, toggleTodo} from '../actions/index'
+import {loadTodos, addTodo, toggleTodo, deleteTodo} from '../actions/index'
 
 class TodosContainer extends Component{
   constructor(props){
@@ -31,12 +31,7 @@ class TodosContainer extends Component{
   // Get list of todos from /api/v1/todos endpoint
   getTodos = () => {
     axios.get('/api/v1/todos').then( response => {
-      // this.setState({
-      //   isLoaded:true,
-      //   todos: response.data
-      // })
       this.props.dispatch(loadTodos(response.data));
-      console.log(this.state.todos)
     }).catch( error => {
       this.setState({
         isLoaded: true,
@@ -56,10 +51,6 @@ class TodosContainer extends Component{
               this.props.dispatch(addTodo(id, title))
               this.setState({inputValue: ''})
       }).catch(error => {
-        this.setState({
-          isLoaded: true,
-          error
-        })
         console.log(error)
       })
     }
@@ -68,20 +59,17 @@ class TodosContainer extends Component{
   // Marked complete
   updateTodo = (event, id) => {
     this.props.dispatch(toggleTodo(id))
+    axios.put(`/api/v1/todos/${id}`).then(response => {
+      console.log("updated..")
+    }).catch(error => console.log("Not able to update..."+ error))
   }
 
-  // Delete Todo
   deleteTodo = (event, id) => {
+    this.props.dispatch(deleteTodo(id));
+    // deleting from backend
     axios.delete(`/api/v1/todos/${id}`).then(response => {
-      console.log(id)
-      console.log(this.state.todos)
-      this.setState({
-        todos: this.state.todos.filter(todo => todo.id !== id),
-        error: null,
-      })
-    }).catch(error => {
-      console.log(error)
-    })
+      console.log(response.data)
+    }).catch(error => console.log("Not able to delete "+ error))
   }
 
 	render(){

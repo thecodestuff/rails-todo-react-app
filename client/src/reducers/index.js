@@ -20,6 +20,8 @@ export default function todosReducer(state=intialState, actions){
       ];
     case TOGGLE_TODO:
       return state.map(todo => (todo.id === actions.index) ? { ...todo, done: !todo.done} : todo );
+    case DELETE_TODO:
+      return state.filter(todo => todo.id !== actions.index);
     default:
       return state
   }
