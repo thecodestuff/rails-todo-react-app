@@ -4,6 +4,8 @@ import update from 'immutability-helper'
 import {connect} from 'react-redux'
 // importing actions
 import {loadTodos, addTodo, toggleTodo, deleteTodo} from '../actions/index'
+// importing presentational components
+import TodosComponent from '../components/TodosComponent'
 
 class TodosContainer extends Component{
   constructor(props){
@@ -73,45 +75,23 @@ class TodosContainer extends Component{
   }
 
 	render(){
-    //const {todos} = this.state
     const {todos} = this.props
-    const mytodos = Array.from(todos)
-			return(
-			<div>
-        <div className="inputContainer">
-          <input className="taskInput"
-            type="text" placeholder="Add a task"
-            maxLength="50"
-            onKeyPress={this.createTodo}
-            onChange={this.handleChange}
-            value={this.state.inputValue}
-          />
-
-        </div>
-        <div className="listWrapper">
-          <ul className="taskList">
-            {
-              mytodos.map((todo) => (
-                <li className="task" todo={todo} key={todo.id}>
-
-                  <input className="taskCheckbox" type="checkbox"
-                    checked={todo.done}
-                    onChange={(event) => this.updateTodo(event,todo.id)}
-                  />
-
-                  <label className={todo.done ? "title":""} >{todo.title}</label>
-                  <span className="deleteTaskBtn" onClick={event => this.deleteTodo(event, todo.id)}>x</span>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
+    return(
+      <div className="wrapper">
+        <TodosComponent 
+          todos = {todos}
+          handleChange = {this.handleChange}
+          inputValue = {this.state.inputValue}
+          updateTodo = {this.updateTodo}
+          createTodo = {this.createTodo}
+          deleteTodo = {this.deleteTodo}
+        />
       </div>
-		);
+    );
 	}
 }
 
-// map state to props object
+//map state to props object
 const mapStateToProps = (state) => {
   return {
     todos: state.todos
