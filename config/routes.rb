@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   	resources :todos
     # user routes
     resources :users, only: %i[create show index]
+
+    # user authentication
+    post '/login', to: 'auth#login'
   end
 end
