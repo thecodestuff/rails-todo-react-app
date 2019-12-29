@@ -83,7 +83,7 @@ input[placeholder] {
 }
 
 .listWrapper {
-  position: absolute;
+  /*position: absolute*/;
   bottom: 50px;
   top: 160px;
   right: 0;
@@ -110,3 +110,26 @@ input[placeholder] {
 .title{
   text-decoration: line-through;
 }
+
+/**
+ * Style For header link bar
+ */
+
+ .header {
+  background-color: black;
+  color: white;
+  width: 100%;
+  height: 50px;
+ }
+
+ .header ul li {
+  display: inline;
+  color: white;
+  margin-left: 50px;
+  float: left;
+ }
+
+ .header ul li a {
+  text-decoration: none;
+  color: white;
+ }
