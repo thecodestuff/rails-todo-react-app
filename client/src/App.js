@@ -6,6 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import Login from './components/LoginComponent'
+import LogOutComponent from './components/LogOutComponent'
 import './App.css';
 //Importing components
 import TodosContainer from './containers/TodosContainer.js'
@@ -16,23 +17,23 @@ class App extends Component{
       <div className="container">
       <div>
        <Router>
-         <div>
-         <ul>
-           <li><Link to="/login">Login</Link></li>
-           <li><Link to="/logout">Sign Up</Link></li>
-         </ul>
+         <div className="header">
+           <ul>
+             <li><Link to="/">Login</Link></li>
+             <li><Link to="/logout">Logout</Link></li>
+             <li><Link to="/todo">Your todo list</Link></li>
+           </ul>
          </div>
 
          <hr/>
          <Switch>
-           <Route path="/login"><Login/></Route>
+           <Route exact= "true" path="/"><Login/></Route>
+           <Route path="/logout"><LogOutComponent /></Route>
+           <Route path="/todo"><TodosContainer /></Route>
          </Switch>
         </Router>
       </div>
-        <div className="header">
-          <h1>Todo List</h1>
-        </div>
-        <TodosContainer />
+       
       </div>
     );
   }

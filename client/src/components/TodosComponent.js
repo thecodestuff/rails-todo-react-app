@@ -18,6 +18,7 @@ class TodosComponent extends Component{
     const mytodos = Array.from(todos)
       return(
       <div>
+        <div><h1>Todo List</h1></div>
         <div className="inputContainer">
           <input className="taskInput"
             type="text" placeholder="Add a task"
