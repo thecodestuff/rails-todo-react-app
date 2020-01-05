@@ -7,5 +7,8 @@ Rails.application.routes.draw do
 
     # user authentication
     post '/login', to: 'auth#login'
+
+    # Check access
+    get '/check_access', to: 'auth#check_access'
   end
 end
