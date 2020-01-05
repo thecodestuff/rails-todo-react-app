@@ -1,6 +1,7 @@
-import React, {Component} from "react"
-import axios from 'axios' // api request package
-import update from 'immutability-helper'
+import React, {Component} from "react";
+import axios from 'axios'; // api request package
+import update from 'immutability-helper';
+import ApiRequests from '../request/ApiRequests';
 
 class TodosContainer extends Component{
   constructor(props){
@@ -27,19 +28,14 @@ class TodosContainer extends Component{
   
   // Get list of todos from /api/v1/todos endpoint
   getTodos = () => {
-    axios.get('/api/v1/todos').then( response => {
-      this.setState({
-        isLoaded:true,
-        todos: response.data
-      })
-      console.log(this.state.todos)
-    }).catch( error => {
+    ApiRequests.loadTodos().then(response => {
       this.setState({
         isLoaded: true,
-        error
-      })
-      console.log(this.state.error)
-    })
+        toos: response.data
+      });
+    }).catch(error => {
+      this.state({ isLoaded:true, error });
+    });
   }
 
   // create a new todo when enter 
@@ -47,10 +43,6 @@ class TodosContainer extends Component{
     // call api POST /api/v1/todos when enter is press
     if(event.key === 'Enter'){
       axios.post('api/v1/todos', {todo: {title: event.target.value}}).then(response => {
-        const todo = response.data
-        console.log(this.state.todos)
-        //debugger
-        //Updating state with current todo
         this.setState({
           todos: this.state.todos.concat(todo),
           inputValue: ''
@@ -89,7 +81,6 @@ const todoIndex = this.state.todos.findIndex(x => x.id === response.data.id)
         todos: this.state.todos.filter(todo => todo.id !== id),
         error: null,
       })
-      //debugger;
     }).catch(error => {
       console.log(error)
     })

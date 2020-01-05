@@ -1,11 +1,32 @@
 import {request} from 'axios';
 
-export default { 
-	getTodos(){
+// getToken() {
+//   	const token = localStorage.getItem('token') == null 
+//   	              ? JSON.stringify({})
+//                   :localStorage.getItem('token')
+//     return token
+// }
+
+export default {
+
+	checkAccess() {
+		// console.log("check access "+token);
 		return(
 			request({
-				method:'get',
-				url: '/api/v1/todos'
+				method: 'GET',
+				url: '/api/v1/check_access',
+				headers: {Authorization: localStorage.getItem('token') == null ? JSON.stringify({}) : localStorage.getItem('token')},
+				responseType: 'json',
+			})
+		);
+	},
+
+	loadTodos(){
+		return(
+			request({
+				method:'GET',
+				url: '/api/v1/todos',
+				headers: {Authorization: localStorage.getItem('token') == null ? JSON.stringify({}) : localStorage.getItem('token')},
 			})
 		);
 	},

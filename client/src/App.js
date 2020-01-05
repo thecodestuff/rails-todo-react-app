@@ -9,9 +9,24 @@ import Login from './components/LoginComponent'
 import LogOutComponent from './components/LogOutComponent'
 import './App.css';
 //Importing components
-import TodosContainer from './containers/TodosContainer.js'
+import TodosContainer from './containers/TodosContainer.js';
+import ApiRequest from './requests/ApiRequest';
 
 class App extends Component{
+  constructor(props) {
+    super(props)
+    this.state = {
+      isAuthorized: false,
+    }
+  }
+
+  componentDidMount() {
+    //check access
+    ApiRequest.checkAccess().then(res => {
+      console.log(res)
+    });
+  }
+
   render(){
     return (
       <div className="container">

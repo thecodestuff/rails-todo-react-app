@@ -1,11 +1,12 @@
-import React, {Component} from "react"
+import React, {Component} from "react";
 import axios from 'axios' // api request package
-import update from 'immutability-helper'
-import {connect} from 'react-redux'
+import update from 'immutability-helper';
+import {connect} from 'react-redux';
 // importing actions
-import {loadTodos, addTodo, toggleTodo, deleteTodo} from '../actions/index'
+import {loadTodos, addTodo, toggleTodo, deleteTodo} from '../actions/index';
 // importing presentational components
-import TodosComponent from '../components/TodosComponent'
+import TodosComponent from '../components/TodosComponent';
+import ApiRequest from '../requests/ApiRequest';
 
 class TodosContainer extends Component{
   constructor(props){
@@ -32,7 +33,7 @@ class TodosContainer extends Component{
 
   // Get list of todos from /api/v1/todos endpoint
   getTodos = () => {
-    axios.get('/api/v1/todos').then( response => {
+    ApiRequest.loadTodos().then( response => {
       this.props.dispatch(loadTodos(response.data));
     }).catch( error => {
       this.setState({

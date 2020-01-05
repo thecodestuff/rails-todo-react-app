@@ -12,7 +12,10 @@ class Login extends Component{
 
   handleLogin() {
   	ApiRequest.login().then(res => {
-  		console.log(res.data.jwt)
+  		console.log(res.data)
+  		localStorage.clear();
+  		localStorage.setItem('token', JSON.stringify(res.data))
+  		// localStorage.setItem('token', res.data.jwt)
   	});
   }
 
