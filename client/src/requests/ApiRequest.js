@@ -1,7 +1,7 @@
 import {request} from 'axios';
 
 // getToken() {
-//   	const token = localStorage.getItem('token') == null 
+//   	const token = localStorage.getItem('token') == null
 //   	              ? JSON.stringify({})
 //                   :localStorage.getItem('token')
 //     return token

@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
 
 	# Get header from incoming request
 	def auth_header
-	  request.headers['Authorization'] 
+	  request.headers['Authorization']
 	end
 
   # return encode jwt token

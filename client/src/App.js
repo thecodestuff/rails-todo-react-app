@@ -23,7 +23,7 @@ class App extends Component{
   componentDidMount() {
     //check access
     ApiRequest.checkAccess().then(res => {
-      console.log(res)
+      this.setState({isAuthorized: true})
     });
   }
 
@@ -48,7 +48,7 @@ class App extends Component{
          </Switch>
         </Router>
       </div>
-       
+
       </div>
     );
   }
