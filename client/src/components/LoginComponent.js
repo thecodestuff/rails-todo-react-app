@@ -1,27 +1,22 @@
 import React, {Component} from 'react'
-import ApiRequest from '../requests/ApiRequest'
+//import ApiRequest from '../requests/ApiRequest'
+import { connect } from 'react-redux';
+import { authenticate } from '../actions/authAction';
 
 class Login extends Component{
-  constructor() {
-  	super();
+  constructor(props) {
+  	super(props);
   	this.state = {
-  		email: 'admin@email.com',
-  		password: 'admin',
-      error: null
+  	  email: '',
+  	  password: '',
+      error: null,
+      redirect: false,
   	}
   }
 
   handleLogin() {
-  	ApiRequest.login().then(res => {
-  		console.log(res.data)
-  		localStorage.clear();
-  		localStorage.setItem('token', JSON.stringify(res.data))
-  		// localStorage.setItem('token', res.data.jwt)
-  	});
-  }
-
-  changeValue() {
-    this.setState({email:'', password:'', error:''});
+  	const {email, password} = this.state
+  	this.props.dispatch(authenticate(email, password))
   }
 
   /**
@@ -29,16 +24,13 @@ class Login extends Component{
    */
   handleSubmit = (e) => {
     e.preventDefault()
+    this.handleLogin()
     
   }
 
-  handleChange = (event, type) => {
-    //if(type=='email')
-      //email = event.target.value
-    //else
-      //passowrd = event.target.password
-
-   // set to state
+  handleChange = (event) => {
+  	const {name, value} = event.target
+  	this.setState( {[name]: value } )
   }
 
   render(){
@@ -52,7 +44,7 @@ class Login extends Component{
              <input type="email" name="email" value={email} placeholder="Email" onChange={this.handleChange} />
              <br/>
              <label>Password</label>
-             <input type="password" name="email" value={password} placeholder="Email" onChange={this.handleChange} />
+             <input type="password" name="password" value={password} placeholder="Email" onChange={this.handleChange} />
              <br/>
              <input type="submit" name="submit" value="Login"/>
            </form>
@@ -61,4 +53,10 @@ class Login extends Component{
     );
   }
 }
-export default Login;
+
+// TODO :: manual dispatch to props
+// const mapDispatchToProps = dispatch => ({
+// 	authentication: () => { dispatch(authenticate()) }
+// })
+
+export default connect()(Login);

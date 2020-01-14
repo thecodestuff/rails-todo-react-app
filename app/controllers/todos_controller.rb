@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-	skip_before_action :require_login
+	#skip_before_action :require_login
 	
 	def index
 		todos = Todo.order('created_at DESC')
