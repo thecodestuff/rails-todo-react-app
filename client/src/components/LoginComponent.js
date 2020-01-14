@@ -28,29 +28,33 @@ class Login extends Component{
    * when form is submit
    */
   handleSubmit = (e) => {
-    // code here
-    // call handleLogin()
-    // do something
+    e.preventDefault()
+    
   }
 
   handleChange = (event, type) => {
-    if(type=='email')
+    //if(type=='email')
       //email = event.target.value
-    else 
+    //else
       //passowrd = event.target.password
 
    // set to state
   }
 
   render(){
+    let {email,password} = this.state
     return(
       <div className="login-wrapper">
          <h1>Login To Dashboard</h1>
-         <button onClick= {this.handleLogin}>Login</button>
          <div className="loginForm">
            <form onSubmit={this.handleSubmit} name="submit" className="login">
-             <label>Email</lable>
-             <input name="email" value={email} placeholder="Email" onChange={this.handleChange} />
+             <label>Email</label>
+             <input type="email" name="email" value={email} placeholder="Email" onChange={this.handleChange} />
+             <br/>
+             <label>Password</label>
+             <input type="password" name="email" value={password} placeholder="Email" onChange={this.handleChange} />
+             <br/>
+             <input type="submit" name="submit" value="Login"/>
            </form>
          </div>
       </div>
