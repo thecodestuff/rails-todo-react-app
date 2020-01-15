@@ -79,7 +79,7 @@ class TodosContainer extends Component{
     const {todos} = this.props
     return(
       <div className="wrapper">
-        <TodosComponent 
+        <TodosComponent
           todos = {todos}
           handleChange = {this.handleChange}
           inputValue = {this.state.inputValue}

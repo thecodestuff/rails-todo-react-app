@@ -25,7 +25,6 @@ class Login extends Component{
   handleSubmit = (e) => {
     e.preventDefault()
     this.handleLogin()
-    
   }
 
   handleChange = (event) => {

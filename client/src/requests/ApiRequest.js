@@ -15,7 +15,7 @@ export default {
 			request({
 				method: 'GET',
 				url: '/api/v1/check_access',
-				headers: {Authorization: localStorage.getItem('token') == null ? JSON.stringify({}) : localStorage.getItem('token')},
+				headers: {Authorization: localStorage.getItem('token') == null ? " " : localStorage.getItem('token')},
 				responseType: 'json',
 			})
 		);
@@ -26,7 +26,7 @@ export default {
 			request({
 				method:'GET',
 				url: '/api/v1/todos',
-				headers: {Authorization: localStorage.getItem('token') == null ? JSON.stringify({}) : localStorage.getItem('token')},
+				headers: {Authorization: localStorage.getItem('token') == null ? " " : localStorage.getItem('token')},
 			})
 		);
 	},
