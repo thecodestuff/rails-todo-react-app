@@ -21,9 +21,8 @@ class ApplicationController < ActionController::API
 
 	# decode token
 	def decoded_token
-		if auth_header
-			token = JSON.parse(auth_header)
-		end
+		header_token = auth_header
+		return (header_token.empty?) ? " " : JWT.decode(header_token, 'my_secret')
 	end
 
   # return session
